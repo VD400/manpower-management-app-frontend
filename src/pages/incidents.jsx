@@ -1,0 +1,142 @@
+import React, { useEffect, useState } from 'react';
+
+const Incidents = () => {
+  const [incidents, setIncidents] = useState([]);
+  const [error, setError] = useState('');
+  const [form, setForm] = useState({emp_id: 0, customer_id: 0, description: '', loss_amount: 0, incident_date: ''});
+  const [loading, setLoading] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [editingIncidents, setEditingIncidents] = useState(false);
+  const token = localStorage.getItem("token");
+  
+  const fetchIncidents = async () => {
+    setLoading(true);
+    await fetch("http://127.0.0.1:8000/incidents", {headers: {Authorization: `Bearer ${token}`}})
+    .then((res) => {
+        if(!res.ok){
+            throw new Error("Unable to fetch incidents");
+        }
+        return res.json();
+    })
+    .then((a) => {
+        setIncidents(a);
+        setLoading(false);
+    })
+    .catch(
+        () => {
+            setError("Failed to fetch Incidents");
+            setLoading(false);
+        }
+    )
+  }
+
+  useEffect(() => {
+    fetchIncidents();
+  },[])
+
+  const changeIncidents = async () => {
+    const url = editingIncidents ? `http://127.0.0.1:8000/incidents/${editingIncidents.incident_id}` : "http://127.0.0.1:8000/incidents";
+    const method = editingIncidents ? "PUT" : "POST";
+    const payload = {
+      emp_id : parseInt(form.emp_id),
+      customer_id: parseInt(form.customer_id),
+      description: form.description,
+      loss_amount: form.loss_amount,
+      incident_date: form.incident_date==="" ? null : form.incident_date
+    };
+    const res = await fetch(url, {method, headers: {"Content-Type" : "application/json", Authorization: `Bearer ${token}`}, body: JSON.stringify(payload)});
+    if(!res.ok){
+      const errorData = await res.json();
+      console.error("Validation error details: ", errorData);
+      setError(`Error: ${res.statusText}`);
+      return;
+    }
+    setShowForm(false);
+    setEditingIncidents(null);
+    fetchIncidents();
+  }
+
+  const handleDelete = async (id) => {
+    if(!window.confirm("Do you want to delete this contract?")){
+      return;
+    }
+    await fetch(`http://127.0.0.1:8000/incidents/${id}`, {method: "DELETE", headers: {Authorization: `Bearer ${token}`}});
+    fetchIncidents();
+  }
+
+  return (
+    <div className="p-6">
+      <div className="flex items-center justify-between mb-6" style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
+        <h1 className="text-2xl font-semibold">Incidents</h1>
+        <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700" onClick={() => {
+          setShowForm(!showForm);
+        }}>Add Incidents</button>
+      </div>
+      <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-6">
+      {showForm && 
+        <form>
+          <div className="grid grid-cols-3 gap-4 mb-4">
+          <div>
+          <label className="text-xs text-gray-500 block mb-1">Employee ID</label>
+          <input className="border border-gray-200 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:border-blue-400" type="number" value={form.emp_id} onChange={(e) => setForm({...form, emp_id: e.target.value})}/>
+          </div>
+          <div>
+          <label className="text-xs text-gray-500 block mb-1">Customer ID</label>
+          <input className="border border-gray-200 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:border-blue-400" type="number" value={form.customer_id} onChange={(e) => setForm({...form, customer_id: e.target.value})}/>
+          </div>
+          <div>
+          <label className="text-xs text-gray-500 block mb-1">Description</label>
+          <input className="border border-gray-200 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:border-blue-400" type="text" value={form.description} onChange={(e) => setForm({...form, description: e.target.value})}/>
+          </div>
+          <div>
+          <label className="text-xs text-gray-500 block mb-1">Loss Amount</label>
+          <input className="border border-gray-200 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:border-blue-400" type="number" value={form.loss_amount} onChange={(e) => setForm({...form, loss_amount:e.target.value})}/>
+          </div>
+          <div>
+          <label className="text-xs text-gray-500 block mb-1">Incident Date</label>
+          <input className="border border-gray-200 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:border-blue-400" type="date" value={form.incident_date} onChange={(e)=>setForm({...form, incident_date:e.target.value})}/>
+          </div>
+        </div>
+        <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700" onClick={changeIncidents}>{editingIncidents ? "Edit" : "Add"}</button>
+      </form>}  
+      </div>
+      <div className="border border-gray-200 rounded-xl overflow-hidden">
+        <table className="w-full text-sm">
+          <thead className="bg-gray-50 text-gray-500 uppercase text-xs">
+            <tr>
+              <th className="px-4 py-3 text-left">Index</th>
+              <th className="px-4 py-3 text-left">Employee ID</th>
+              <th className="px-4 py-3 text-left">Customer In</th>
+              <th className="px-4 py-3 text-left">Description</th>
+              <th className="px-4 py-3 text-left">Loss Amount</th>
+              <th className="px-4 py-3 text-left">Incident Date</th>
+              <th className="px-4 py-3 text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {incidents.map((e,idx)=>(
+              <tr key={e.incident_id} className="hover:bg-gray-100">
+                <td className="px-4 py-3 text-gray-400">{idx+1}</td>
+                <td className="px-4 py-3 text-gray-400">{e.emp_id}</td>
+                <td className="px-4 py-3 text-gray-400">{e.customer_id}</td>
+                <td className="px-4 py-3 text-gray-400">{e.description}</td>
+                <td className="px-4 py-3 text-gray-400">{e.loss_amount}</td>
+                <td className="px-4 py-3 text-gray-400">{e.incident_date}</td>
+                <td className="px-4 py-3">
+                  <button className="text-red-500 border-red-200 px-3 py-1 rounded hover:bg-red-50 text-xs" onClick={() => handleDelete(e.incident_id)}>Delete</button>
+                  <button onClick={() =>{
+                    setEditingIncidents(e);
+                    setShowForm(true);
+                    setForm({...form, emp_id: e.emp_id, customer_id: e.customer_id, description: e.description, loss_amount: e.loss_amount, incident_date: e.incident_date});
+                  }} className="text-blue-500 border-blue-200 px-3 py-1 rounded hover:bg-blue-50 text-xs">Edit</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
+}
+
+export default Incidents;
