@@ -17,7 +17,7 @@ const Contracts = () => {
       if(!res.ok){
         throw new Error("Failed to fetch");
       }
-      const data = res.json();
+      const data = await res.json();
       setContracts(data);
     }catch{
       setError("Could not load data");
