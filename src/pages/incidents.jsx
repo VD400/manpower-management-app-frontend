@@ -16,8 +16,8 @@ const Incidents = () => {
       if(!res.ok){
         throw new Error("Failed to fetch incidents");
       }
-      const data = res.json();
-      setEmployees(data);
+      const data = await res.json();
+      setIncidents(data);
     }catch{
       setError("Could not load incidents");
     }finally{
@@ -63,7 +63,7 @@ const Incidents = () => {
 
   return (
     <div className="p-6">
-      <div className="flex items-center justify-between mb-6" style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
+      <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-semibold">Incidents</h1>
         <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700" onClick={() => {
           setShowForm(!showForm);
@@ -110,7 +110,7 @@ const Incidents = () => {
               <th className="px-4 py-3 text-left">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-gray-100">
             {incidents.map((e,idx)=>(
               <tr key={e.incident_id} className="hover:bg-gray-100">
                 <td className="px-4 py-3 text-gray-400">{idx+1}</td>
@@ -120,12 +120,12 @@ const Incidents = () => {
                 <td className="px-4 py-3 text-gray-400">{e.loss_amount}</td>
                 <td className="px-4 py-3 text-gray-400">{e.incident_date}</td>
                 <td className="px-4 py-3">
-                  <button className="text-red-500 border-red-200 px-3 py-1 rounded hover:bg-red-50 text-xs" onClick={() => handleDelete(e.incident_id)}>Delete</button>
+                  <button className="text-red-500 border border-red-200 px-3 py-1 rounded hover:bg-red-50 text-xs" onClick={() => handleDelete(e.incident_id)}>Delete</button>
                   <button onClick={() =>{
                     setEditingIncidents(e);
                     setShowForm(true);
                     setForm({...form, emp_id: e.emp_id, customer_id: e.customer_id, description: e.description, loss_amount: e.loss_amount, incident_date: e.incident_date});
-                  }} className="text-blue-500 border-blue-200 px-3 py-1 rounded hover:bg-blue-50 text-xs">Edit</button>
+                  }} className="text-blue-500 border border-blue-200 px-3 py-1 rounded hover:bg-blue-50 text-xs">Edit</button>
                 </td>
               </tr>
             ))}
