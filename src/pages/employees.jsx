@@ -87,7 +87,7 @@ const Employees = () => {
             <input className="border border-gray-200 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:border-blue-400" type="text" value={form.mobile_number} onChange={e => setForm({...form, mobile_number:e.target.value})}/>
           </div>
           </div>
-        <button className="rounded-lg text-sm px-4 py-2 mt-1 text-white bg-blue-600 hover:bg-blue-700" onClick={changeEmployees}>{(!!editingEmployee) ? "Edit" : "Add"}</button>
+        <button type="button" className="rounded-lg text-sm px-4 py-2 mt-1 text-white bg-blue-600 hover:bg-blue-700" onClick={changeEmployees}>{(!!editingEmployee) ? "Edit" : "Add"}</button>
       </form>}
       </div>
       <div className="border border-gray-200 rounded-xl overflow-hidden"> 

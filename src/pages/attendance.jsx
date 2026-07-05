@@ -89,7 +89,7 @@ const Attendance = () => {
           </select>
           </div>
           </div>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-lg my-2 text-sm hover:bg-blue-700" onClick={changeAttendance}>{editingAttendance ? "Edit" : "Add"}</button>
+        <button type="button" className="bg-blue-600 text-white px-4 py-2 rounded-lg my-2 text-sm hover:bg-blue-700" onClick={changeAttendance}>{editingAttendance ? "Edit" : "Add"}</button>
       </form>}  
       </div>
         <div className="border border-gray-200 rounded-xl overflow-hidden">
