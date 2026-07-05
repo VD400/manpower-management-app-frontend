@@ -7,12 +7,12 @@ function Login(){
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
   const handleLogin = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('username', email);
     formData.append('password', password);
-
     try{
       const response = await fetch(`${import.meta.env.VITE_API_URL}/token`, {
         method: 'POST', body: formData
@@ -28,24 +28,65 @@ function Login(){
       setError("Something went wrong, try again");
     }
   };
+
   return(
-    <div>
-      <div className="border border-gray-500 bg-gray-50 p-4">
-        <h2 className="text-lg font-gray-700 px-4 py-2">Manpower App - Login</h2>
-        {error && <p className="text-red-500 bg-red-50">{error}</p>}
-        <form onSubmit={handleLogin}>
-          <div className="flex border border-gray-700 bg-gray-100 mx-4 my-3 px-4 py-3">
-          <div>
-            <label className="text-xs text-gray-500 px-3 py-2">Email</label>
-            <input className="border border-gray-500 text-xs focus:border-blue-400" type='email' value={email} onChange={(e) => setEmail(e.target.value)} required/>
-          </div>
-          <div>
-            <label className="text-xs text-gray-500 px-3 py-2">Password</label>
-            <input  className="border border-gray-500 text-xs focus:border-blue-400" type="password" value={password} onChange={(e)=>setPassword(e.target.value)} required/>
-          </div>
-          </div>
-          <button className="bg-blue-500 text-white border border-gray-100 rounded-xl hover:bg-blue-700" type="submit">Login</button>
-        </form>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="w-full max-w-md">
+
+        {/* Branding */}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-semibold text-gray-800">OpsManager</h1>
+          <p className="text-gray-400 text-sm mt-2">Manpower management, simplified.</p>
+        </div>
+
+        {/* Card */}
+        <div className="bg-white border border-gray-200 rounded-2xl p-8">
+          <h2 className="text-lg font-medium text-gray-700 mb-6">Sign in to your account</h2>
+
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-500 text-sm px-4 py-3 rounded-lg mb-4">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleLogin}>
+            <div className="mb-4">
+              <label className="text-xs text-gray-500 block mb-1">Email address</label>
+              <input
+                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-400"
+                type='email'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+
+            <div className="mb-6">
+              <label className="text-xs text-gray-500 block mb-1">Password</label>
+              <input
+                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-400"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+              Sign in
+            </button>
+          </form>
+        </div>
+
+        {/* Footer */}
+        <p className="text-center text-xs text-gray-400 mt-6">
+          OpsManager v1.0 — Built with FastAPI & React
+        </p>
+
       </div>
     </div>
   );
