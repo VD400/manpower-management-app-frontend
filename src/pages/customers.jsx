@@ -55,7 +55,7 @@ const Customers = () => {
       body: JSON.stringify(form)
     });
     setShowForm(false);
-    fetchCustomers();
+    await fetchCustomers();
     }
     
   return (
