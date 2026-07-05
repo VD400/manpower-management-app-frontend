@@ -13,7 +13,7 @@ const Shifts = () => {
   const fetchShifts = async () => {
     setLoading(true);
     try{
-      const res = await fetch("http://127.0.0.1:8000/shifts", {headers: {Authorization: `Bearer ${token}`}});
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/shifts`, {headers: {Authorization: `Bearer ${token}`}});
       if(!res.ok){
         throw new Error("Could not load shifts");
       }
@@ -32,7 +32,7 @@ const Shifts = () => {
 
   const changeShifts = async () => {
     try{
-      const url = editingShift ? `http://127.0.0.1:8000/shifts/${editingShift.shift_id}` : "http://127.0.0.1:8000/shifts";
+      const url = editingShift ? `${import.meta.env.VITE_API_URL}/shifts/${editingShift.shift_id}` : `${import.meta.env.VITE_API_URL}/shifts`;
       const method = editingShift ? "PUT" : "POST";
       const payload = {
         contract_id: parseInt(form.contract_id),
@@ -61,7 +61,7 @@ const Shifts = () => {
     if(!window.confirm("Are you sure you want to delete this shift?")){
       return;
     }
-    await fetch(`http://127.0.0.1:8000/shifts/${idx}`, {method: "DELETE", headers: {Authorization: `Bearer ${token}`}});
+    await fetch(`${import.meta.env.VITE_API_URL}/shifts/${idx}`, {method: "DELETE", headers: {Authorization: `Bearer ${token}`}});
     await fetchShifts();
   }
 
@@ -121,7 +121,7 @@ const Shifts = () => {
               <th className="px-4 py-3 text-left">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-gray-100">
             {shifts.map((e,idx) => (
               <tr key={e.shift_id} className="hover:bg-gray-100">
                 <td className="px-4 py-3 font-gray-400">{idx+1}</td>
