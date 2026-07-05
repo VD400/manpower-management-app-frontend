@@ -10,12 +10,12 @@ const Customers = () => {
     const [form, setForm] = useState({customer_name: "", address: ""});
     const token = localStorage.getItem('token');
     
-    const fetchCustomers = () => {
+    const fetchCustomers = async () => {
       setLoading(true);
       try {
-        const res = fetch(`${import.meta.env.VITE_API_URL}/customers`, {headers: {Authorization: `Bearer ${token}`}})
+        const res =await fetch(`${import.meta.env.VITE_API_URL}/customers`, {headers: {Authorization: `Bearer ${token}`}})
         if(!res.ok) throw new Error("Failed to fetch customers");
-        const data = res.json();
+        const data = await res.json();
         setCustomers(data);
       }catch{
         setError("Could not load data");
@@ -38,7 +38,7 @@ const Customers = () => {
           const data = await res.json().catch(() => ({}));
           throw new Error(data.detail || `Delete failed: ${res.status}`);
         }
-        fetchCustomers();
+        await fetchCustomers();
       }catch(err){
         alert(err.message);
       }
@@ -54,7 +54,7 @@ const Customers = () => {
         if(!res.ok) throw new Error("Failed to save");
         setShowForm(false);
         setEditingCustomer(null);
-        await fetchEmployees();
+        await fetchCustomers();
       }catch(err){
         console.error(err);
         setError("Could not save customer");
@@ -67,7 +67,7 @@ const Customers = () => {
         <h1 className="text-2xl font-semibold">Customers</h1>
         <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700" onClick={() => setShowForm(!showForm)}>Add Customer</button>
       </div>
-      <div className="by-gray-50 border border-gray-200 rounded-xl p-4 mb-6">
+      <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-6">
       {showForm && <form>
         <div className="grid grid-cols-3 gap-4 mb-4">
           <div>
