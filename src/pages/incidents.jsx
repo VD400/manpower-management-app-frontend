@@ -11,7 +11,7 @@ const Incidents = () => {
   
   const fetchIncidents = async () => {
     setLoading(true);
-    await fetch("http://127.0.0.1:8000/incidents", {headers: {Authorization: `Bearer ${token}`}})
+    await fetch(`${import.meta.env.VITE_API_URL}/incidents`, {headers: {Authorization: `Bearer ${token}`}})
     .then((res) => {
         if(!res.ok){
             throw new Error("Unable to fetch incidents");
@@ -35,7 +35,7 @@ const Incidents = () => {
   },[])
 
   const changeIncidents = async () => {
-    const url = editingIncidents ? `http://127.0.0.1:8000/incidents/${editingIncidents.incident_id}` : "http://127.0.0.1:8000/incidents";
+    const url = editingIncidents ? `${import.meta.env.VITE_API_URL}/incidents/${editingIncidents.incident_id}` : `${import.meta.env.VITE_API_URL}/incidents`;
     const method = editingIncidents ? "PUT" : "POST";
     const payload = {
       emp_id : parseInt(form.emp_id),
@@ -60,7 +60,7 @@ const Incidents = () => {
     if(!window.confirm("Do you want to delete this contract?")){
       return;
     }
-    await fetch(`http://127.0.0.1:8000/incidents/${id}`, {method: "DELETE", headers: {Authorization: `Bearer ${token}`}});
+    await fetch(`${import.meta.env.VITE_API_URL}/incidents/${id}`, {method: "DELETE", headers: {Authorization: `Bearer ${token}`}});
     fetchIncidents();
   }
 

@@ -14,7 +14,7 @@ function Login(){
     formData.append('password', password);
 
     try{
-      const response = await fetch('http://localhost:8000/token', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/token`, {
         method: 'POST', body: formData
       });
       if (!response.ok){

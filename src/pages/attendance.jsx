@@ -11,7 +11,7 @@ const Attendance = () => {
   
   const fetchAttendance = async () => {
     setLoading(true);
-    await fetch("http://127.0.0.1:8000/attendance", {headers: {Authorization: `Bearer ${token}`}})
+    await fetch(`${import.meta.env.VITE_API_URL}/attendance`, {headers: {Authorization: `Bearer ${token}`}})
     .then((res) => {
         if(!res.ok){
             throw new Error("Unable to fetch attendance");
@@ -35,7 +35,7 @@ const Attendance = () => {
   },[])
 
   const changeAttendance = async () => {
-    const url = editingAttendance ? `http://127.0.0.1:8000/attendance/${editingAttendance.attendance_id}` : "http://127.0.0.1:8000/attendance";
+    const url = editingAttendance ? `${import.meta.env.VITE_API_URL}/attendance/${editingAttendance.attendance_id}` : `${import.meta.env.VITE_API_URL}/attendance`;
     const method = editingAttendance ? "PUT" : "POST";
     const payload = {
       shift_id : parseInt(form.shift_id),
@@ -58,7 +58,7 @@ const Attendance = () => {
     if(!window.confirm("Do you want to delete this contract?")){
       return;
     }
-    await fetch(`http://127.0.0.1:8000/attendance/${id}`, {method: "DELETE", headers: {Authorization: `Bearer ${token}`}});
+    await fetch(`${import.meta.env.VITE_API_URL}/${id}`, {method: "DELETE", headers: {Authorization: `Bearer ${token}`}});
     fetchAttendance();
   }
 
