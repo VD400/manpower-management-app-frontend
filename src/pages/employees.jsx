@@ -12,22 +12,18 @@ const Employees = () => {
 
   const fetchEmployees = async () => {
     setLoading(true);
-    console.log(import.meta.env.VITE_API_URL)
-    await fetch(`${import.meta.env.VITE_API_URL}/employees`, {headers: {Authorization: `Bearer ${token}`}})
-    .then(res => {
+    try{
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/employees`, {headers: {Authorization: `Bearer ${token}`}})
       if(!res.ok){
-        throw new Error("Failed to fetch data");
+        throw new Error("Failed to fetch employees");
       }
-      return res.json();
-    })
-    .then(emp => {
-      setEmployees(emp);
-      setLoading(false);
-    })
-    .catch(() => {
+      const data= res.json();
+      setEmployees(data);
+    }catch{
       setError("Could not load data");
+    }finally{
       setLoading(false);
-    })
+    }
   }
 
   const handleDelete = async (id) => {
@@ -47,13 +43,22 @@ const Employees = () => {
   }
 
   async function changeEmployees(){
-    const endpoint = editingEmployee ? `${import.meta.env.VITE_API_URL}/employees/${editingEmployee.emp_id}` : `${import.meta.env.VITE_API_URL}/employees`;
-    const method = editingEmployee ? "PUT" : "POST";
-    await fetch(endpoint, {method, headers: {"Content-Type" : "application/json", Authorization : `Bearer ${token}`},
-      body: JSON.stringify(form)}
-    );
-    setShowForm(false);
-    await fetchEmployees();
+    try{
+      const endpoint = editingEmployee ? `${import.meta.env.VITE_API_URL}/employees/${editingEmployee.emp_id}` : `${import.meta.env.VITE_API_URL}/employees`;
+      const method = editingEmployee ? "PUT" : "POST";
+      const res = await fetch(endpoint, {method, headers: {"Content-Type" : "application/json", Authorization : `Bearer ${token}`},
+        body: JSON.stringify(form)}
+      );
+      if(!res.ok){
+        throw new Error("Failed to fetch employees");
+      }
+      setShowForm(false);
+      setEditingEmployee(null);
+      await fetchEmployees();
+    }catch(err){
+      console.log(err);
+      setError("Could not save employee");
+    }
   }
 
   useEffect(() => {

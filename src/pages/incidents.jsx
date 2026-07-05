@@ -11,23 +11,18 @@ const Incidents = () => {
   
   const fetchIncidents = async () => {
     setLoading(true);
-    await fetch(`${import.meta.env.VITE_API_URL}/incidents`, {headers: {Authorization: `Bearer ${token}`}})
-    .then((res) => {
-        if(!res.ok){
-            throw new Error("Unable to fetch incidents");
-        }
-        return res.json();
-    })
-    .then((a) => {
-        setIncidents(a);
-        setLoading(false);
-    })
-    .catch(
-        () => {
-            setError("Failed to fetch Incidents");
-            setLoading(false);
-        }
-    )
+    try{
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/incidents`, {headers: {Authorization: `Bearer ${token}`}})
+      if(!res.ok){
+        throw new Error("Failed to fetch incidents");
+      }
+      const data = res.json();
+      setEmployees(data);
+    }catch{
+      setError("Could not load incidents");
+    }finally{
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -35,25 +30,27 @@ const Incidents = () => {
   },[])
 
   const changeIncidents = async () => {
-    const url = editingIncidents ? `${import.meta.env.VITE_API_URL}/incidents/${editingIncidents.incident_id}` : `${import.meta.env.VITE_API_URL}/incidents`;
-    const method = editingIncidents ? "PUT" : "POST";
-    const payload = {
-      emp_id : parseInt(form.emp_id),
-      customer_id: parseInt(form.customer_id),
-      description: form.description,
-      loss_amount: form.loss_amount,
-      incident_date: form.incident_date==="" ? null : form.incident_date
-    };
-    const res = await fetch(url, {method, headers: {"Content-Type" : "application/json", Authorization: `Bearer ${token}`}, body: JSON.stringify(payload)});
-    if(!res.ok){
-      const errorData = await res.json();
-      console.error("Validation error details: ", errorData);
-      setError(`Error: ${res.statusText}`);
-      return;
+    try{
+      const url = editingIncidents ? `${import.meta.env.VITE_API_URL}/incidents/${editingIncidents.incident_id}` : `${import.meta.env.VITE_API_URL}/incidents`;
+      const method = editingIncidents ? "PUT" : "POST";
+      const payload = {
+        emp_id : parseInt(form.emp_id),
+        customer_id: parseInt(form.customer_id),
+        description: form.description,
+        loss_amount: form.loss_amount,
+        incident_date: form.incident_date==="" ? null : form.incident_date
+      };
+      const res = await fetch(url, {method, headers: {"Content-Type" : "application/json", Authorization: `Bearer ${token}`}, body: JSON.stringify(payload)});
+      if(!res.ok){
+        throw new Error("Failed to save");
+      }
+      setShowForm(false);
+      setEditingIncidents(null);
+      await fetchIncidents();
+    }catch(err){
+      console.error(err);
+      setError("Failed to save incident");
     }
-    setShowForm(false);
-    setEditingIncidents(null);
-    await fetchIncidents();
   }
 
   const handleDelete = async (id) => {

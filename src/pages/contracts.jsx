@@ -12,48 +12,47 @@ const Contracts = () => {
 
   const fetchContracts = async () => {
     setLoading(true);
-    await fetch(`${import.meta.env.VITE_API_URL}/contracts`, {headers: {Authorization: `Bearer ${token}`}})
-    .then(res => {
+    try{
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/contracts`, {headers: {Authorization: `Bearer ${token}`}})
       if(!res.ok){
-        throw new Error("Failed to fetch contracts");
+        throw new Error("Failed to fetch");
       }
-      return res.json();
-    })
-    .then(cont => {
-      setContracts(cont);
+      const data = res.json();
+      setContracts(data);
+    }catch{
+      setError("Could not load data");
+    }finally{
       setLoading(false);
-    })
-    .catch(() => {
-      setError("Could not fetch contracts");
-      setLoading(false);
-    })
+    }
   }
 
-  useEffect(()=>{
+useEffect(()=>{
     fetchContracts();
   },[]);
 
   const changeContracts = async () => {
-    const url = editingContracts ? `${import.meta.env.VITE_API_URL}/contracts/${editingContracts.contract_id}` : `${import.meta.env.VITE_API_URL}/contracts`;
-    const method = editingContracts ? "PUT" : "POST";
-    const payload = {emp_id: parseInt(form.emp_id, 10),
-      customer_id: parseInt(form.customer_id,10),
-      contract_type: form.contract_type,
-      monthly_salary: parseFloat(form.monthly_salary),
-      start_date: form.start_date === "" ? null : form.start_date,
-      end_date: form.end_date === "" ? null : form.end_date
-    };
-    const res = await fetch(url, {method, headers: {"Content-Type" : "application/json", Authorization: `Bearer ${token}`},
-    body: JSON.stringify(payload)});
-    if(!res.ok){
-      const errorData = await res.json();
-      console.error("Validation error details: ", errorData);
-      setError(`Error: ${res.statusText}`);
-      return;
+    try{ 
+      const url = editingContracts ? `${import.meta.env.VITE_API_URL}/contracts/${editingContracts.contract_id}` : `${import.meta.env.VITE_API_URL}/contracts`;
+      const method = editingContracts ? "PUT" : "POST";
+      const payload = {emp_id: parseInt(form.emp_id, 10),
+        customer_id: parseInt(form.customer_id,10),
+        contract_type: form.contract_type,
+        monthly_salary: parseFloat(form.monthly_salary),
+        start_date: form.start_date === "" ? null : form.start_date,
+        end_date: form.end_date === "" ? null : form.end_date
+        };
+      const res = await fetch(url, {method, headers: {"Content-Type" : "application/json", Authorization: `Bearer ${token}`},
+        body: JSON.stringify(payload)});
+      if(!res.ok){
+        throw new Error("Failed to save");
+      }
+      setShowForm(false);
+      setEditingContracts(null);
+      await fetchContracts();
+    }catch(err){
+      console.error(err);
+      setError("Could not save contract");
     }
-    setShowForm(false);
-    setEditingContracts(null);
-    await fetchContracts();
   }
 
   const handleDelete = async (id) => {

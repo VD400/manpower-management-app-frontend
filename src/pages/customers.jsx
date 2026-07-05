@@ -9,22 +9,19 @@ const Customers = () => {
     const [editingCustomer, setEditingCustomer] = useState(null);
     const [form, setForm] = useState({customer_name: "", address: ""});
     const token = localStorage.getItem('token');
+    
     const fetchCustomers = () => {
       setLoading(true);
-      fetch(`${import.meta.env.VITE_API_URL}/customers`, {headers: {Authorization: `Bearer ${token}`}})
-      .then( res => {
-        if(!res.ok) throw new Error("Failed to fetch");
-        return res.json();
-        }
-      )
-      .then(data => {
+      try {
+        const res = fetch(`${import.meta.env.VITE_API_URL}/customers`, {headers: {Authorization: `Bearer ${token}`}})
+        if(!res.ok) throw new Error("Failed to fetch customers");
+        const data = res.json();
         setCustomers(data);
+      }catch{
+        setError("Could not load data");
+      }finally{
         setLoading(false);
-      })
-      .catch(() => {
-        setError("Could not load customers");
-        setLoading(false);
-      })
+      }
     }
 
     useEffect(() => {
@@ -48,14 +45,20 @@ const Customers = () => {
     }    
 
     const handleSubmit = async () => {
-      const url = editingCustomer ? `${import.meta.env.VITE_API_URL}/customers/${editingCustomer.customer_id}` : `${import.meta.env.VITE_API_URL}/customers`;
-      const method = editingCustomer ? "PUT" : 'POST';
-
-      await fetch(url, {method, headers: {"Content-Type":"application/json", Authorization: `Bearer ${token}`},
-      body: JSON.stringify(form)
-    });
-    setShowForm(false);
-    await fetchCustomers();
+      try{
+        const url = editingCustomer ? `${import.meta.env.VITE_API_URL}/customers/${editingCustomer.customer_id}` : `${import.meta.env.VITE_API_URL}/customers`;
+        const method = editingCustomer ? "PUT" : 'POST';
+        const res = await fetch(url, {method, headers: {"Content-Type":"application/json", Authorization: `Bearer ${token}`},
+          body: JSON.stringify(form)
+        });
+        if(!res.ok) throw new Error("Failed to save");
+        setShowForm(false);
+        setEditingCustomer(null);
+        await fetchEmployees();
+      }catch(err){
+        console.error(err);
+        setError("Could not save customer");
+      }
     }
     
   return (

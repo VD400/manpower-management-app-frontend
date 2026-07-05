@@ -11,23 +11,18 @@ const Attendance = () => {
   
   const fetchAttendance = async () => {
     setLoading(true);
-    await fetch(`${import.meta.env.VITE_API_URL}/attendance`, {headers: {Authorization: `Bearer ${token}`}})
-    .then((res) => {
-        if(!res.ok){
-            throw new Error("Unable to fetch attendance");
-        }
-        return res.json();
-    })
-    .then((a) => {
-        setAttendance(a);
-        setLoading(false);
-    })
-    .catch(
-        () => {
-            setError("Failed to fetch attendance");
-            setLoading(false);
-        }
-    )
+    try{
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/attendance`, {headers: {Authorization: `Bearer ${token}`}});
+      if(!res.ok){
+        throw new Error("Failed to fetch");
+      }
+      const data = await res.json();
+      setAttendance(data);
+    } catch {
+      setError("Could not load data");
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -35,23 +30,25 @@ const Attendance = () => {
   },[])
 
   const changeAttendance = async () => {
-    const url = editingAttendance ? `${import.meta.env.VITE_API_URL}/attendance/${editingAttendance.attendance_id}` : `${import.meta.env.VITE_API_URL}/attendance`;
-    const method = editingAttendance ? "PUT" : "POST";
-    const payload = {
-      shift_id : parseInt(form.shift_id),
-      check_in : form.check_in==="" ? null : form.check_in,
-      status : form.status
-    };
-    const res = await fetch(url, {method, headers: {"Content-Type" : "application/json", Authorization: `Bearer ${token}`}, body: JSON.stringify(payload)});
-    if(!res.ok){
-      const errorData = await res.json();
-      console.error("Validation error details: ", errorData);
-      setError(`Error: ${res.statusText}`);
-      return;
+    try {
+      const url = editingAttendance ? `${import.meta.env.VITE_API_URL}/attendance/${editingAttendance.attendance_id}` : `${import.meta.env.VITE_API_URL}/attendance`;
+      const method = editingAttendance ? "PUT" : "POST";
+      const payload = {
+        shift_id : parseInt(form.shift_id),
+        check_in : form.check_in==="" ? null : form.check_in,
+        status : form.status
+      };
+      const res = await fetch(url, {method, headers: {"Content-Type" : "application/json", Authorization: `Bearer ${token}`}, body: JSON.stringify(payload)});
+      if(!res.ok){
+        throw new Error("Failed to save");
+      }
+      setShowForm(false);
+      setEditingAttendance(null);
+      await fetchAttendance();
+    } catch(err){
+      console.error(err);
+      setError("Could not save attendance")
     }
-    setShowForm(false);
-    setEditingAttendance(null);
-    await fetchAttendance();
   }
 
   const handleDelete = async (id) => {

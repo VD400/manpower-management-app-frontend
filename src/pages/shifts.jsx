@@ -12,21 +12,18 @@ const Shifts = () => {
 
   const fetchShifts = async () => {
     setLoading(true);
-    await fetch("http://127.0.0.1:8000/shifts", {headers: {Authorization: `Bearer ${token}`}})
-    .then(res => {
+    try{
+      const res = await fetch("http://127.0.0.1:8000/shifts", {headers: {Authorization: `Bearer ${token}`}});
       if(!res.ok){
-        throw new Error("Failed to fetch shifts");
+        throw new Error("Could not load shifts");
       }
-      return res.json();
-    }) 
-    .then(s => {
-      setShifts(s);
+      const data = await res.json();
+      setShifts(data);
+    }catch{
+      setError("Could not load shifts data");
+    }finally{
       setLoading(false);
-    })
-    .catch(()=>{
-      setError("Could not fetch shifts");
-      setLoading(false);
-    })
+    }
   }
 
   useEffect(() => {
@@ -34,22 +31,29 @@ const Shifts = () => {
   },[])
 
   const changeShifts = async () => {
-    const url = editingShift ? `http://127.0.0.1:8000/shifts/${editingShift.shift_id}` : "http://127.0.0.1:8000/shifts";
-    const method = editingShift ? "PUT" : "POST";
-    const payload = {
-      contract_id: parseInt(form.contract_id),
-      shift_date: form.shift_date==="" ? null : form.shift_date,
-      start_time: form.start_time==="" ? null : form.start_time,
-      end_time:form.end_time==="" ? null : form.end_time,
-      shift_hours: parseFloat(form.shift_hours),
-      shift_pay: parseFloat(form.shift_pay)
-    }
-    await fetch(url, {method, headers: {"Content-Type": "application/json", Authorization: `Bearer ${token}`},
+    try{
+      const url = editingShift ? `http://127.0.0.1:8000/shifts/${editingShift.shift_id}` : "http://127.0.0.1:8000/shifts";
+      const method = editingShift ? "PUT" : "POST";
+      const payload = {
+        contract_id: parseInt(form.contract_id),
+        shift_date: form.shift_date==="" ? null : form.shift_date,
+        start_time: form.start_time==="" ? null : form.start_time,
+        end_time:form.end_time==="" ? null : form.end_time,
+        shift_hours: parseFloat(form.shift_hours),
+        shift_pay: parseFloat(form.shift_pay)
+      }
+    const res = await fetch(url, {method, headers: {"Content-Type": "application/json", Authorization: `Bearer ${token}`},
       body: JSON.stringify(payload)}
     );
+    if(!res.ok){
+      throw new Error("Failed to save");
+    }
     setShowForm(false);
     setEditingShift(null);
     await fetchShifts();
+  }catch(err){
+    console.error(err);
+    setError("Could not save shift");
   }
 
   const handleDelete = async (idx) => {
