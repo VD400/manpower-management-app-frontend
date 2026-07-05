@@ -65,6 +65,8 @@ const Attendance = () => {
         <h1 className='text-2xl font-semibold'>Attendance</h1>
         <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700" onClick={() => {
           setShowForm(!showForm);
+          setEditingAttendance(null);
+          setForm({shift_id: 0, check_in: '', status: ''});
         }}>Add Attendance</button>
       </div>
       <div className="bg-gray-50 border border-gray-200 rounded-lg mb-6 p-4">
