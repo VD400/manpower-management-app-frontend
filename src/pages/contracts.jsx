@@ -53,7 +53,7 @@ const Contracts = () => {
     }
     setShowForm(false);
     setEditingContracts(null);
-    fetchContracts();
+    await fetchContracts();
   }
 
   const handleDelete = async (id) => {
@@ -61,7 +61,7 @@ const Contracts = () => {
       return;
     }
     await fetch(`${import.meta.env.VITE_API_URL}/contracts/${id}`, {method: "DELETE", headers: {Authorization: `Bearer ${token}`}});
-    fetchContracts();
+    await fetchContracts();
   }
 
   return (

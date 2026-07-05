@@ -39,7 +39,7 @@ const Employees = () => {
       if(!res.ok){
         throw new Error(`Delete failed: ${res.status}`);
       }
-    fetchEmployees();
+      await fetchEmployees();
     }catch(err){
       console.error(err);
       setError("Could not delete employee");
@@ -53,7 +53,7 @@ const Employees = () => {
       body: JSON.stringify(form)}
     );
     setShowForm(false);
-    fetchEmployees();
+    await fetchEmployees();
   }
 
   useEffect(() => {

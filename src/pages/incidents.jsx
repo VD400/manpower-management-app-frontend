@@ -53,7 +53,7 @@ const Incidents = () => {
     }
     setShowForm(false);
     setEditingIncidents(null);
-    fetchIncidents();
+    await fetchIncidents();
   }
 
   const handleDelete = async (id) => {
@@ -61,7 +61,7 @@ const Incidents = () => {
       return;
     }
     await fetch(`${import.meta.env.VITE_API_URL}/incidents/${id}`, {method: "DELETE", headers: {Authorization: `Bearer ${token}`}});
-    fetchIncidents();
+    await fetchIncidents();
   }
 
   return (

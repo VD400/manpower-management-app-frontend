@@ -51,7 +51,7 @@ const Attendance = () => {
     }
     setShowForm(false);
     setEditingAttendance(null);
-    fetchAttendance();
+    await fetchAttendance();
   }
 
   const handleDelete = async (id) => {
@@ -59,7 +59,7 @@ const Attendance = () => {
       return;
     }
     await fetch(`${import.meta.env.VITE_API_URL}/${id}`, {method: "DELETE", headers: {Authorization: `Bearer ${token}`}});
-    fetchAttendance();
+    await fetchAttendance();
   }
 
   return (

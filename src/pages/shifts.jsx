@@ -49,7 +49,7 @@ const Shifts = () => {
     );
     setShowForm(false);
     setEditingShift(null);
-    fetchShifts();
+    await fetchShifts();
   }
 
   const handleDelete = async (idx) => {
@@ -57,7 +57,7 @@ const Shifts = () => {
       return;
     }
     await fetch(`http://127.0.0.1:8000/shifts/${idx}`, {method: "DELETE", headers: {Authorization: `Bearer ${token}`}});
-    fetchShifts();
+    await fetchShifts();
   }
 
   return (
