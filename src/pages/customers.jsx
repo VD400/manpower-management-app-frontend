@@ -11,7 +11,7 @@ const Customers = () => {
     const token = localStorage.getItem('token');
     const fetchCustomers = () => {
       setLoading(true);
-      fetch('http://127.0.0.1:8000/customers', {headers: {Authorization: `Bearer ${token}`}})
+      fetch(`${import.meta.env.VITE_API_URL}/customers`, {headers: {Authorization: `Bearer ${token}`}})
       .then( res => {
         if(!res.ok) throw new Error("Failed to fetch");
         return res.json();
@@ -36,7 +36,7 @@ const Customers = () => {
         return;
       }
       try{
-        const res = await fetch(`http://127.0.0.1:8000/customers/${id}`, {method: "DELETE", headers: {Authorization: `Bearer ${token}`}});
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/customers/${id}`, {method: "DELETE", headers: {Authorization: `Bearer ${token}`}});
         if(!res.ok){
           const data = await res.json().catch(() => ({}));
           throw new Error(data.detail || `Delete failed: ${res.status}`);
@@ -48,7 +48,7 @@ const Customers = () => {
     }    
 
     const handleSubmit = async () => {
-      const url = editingCustomer ? `http://127.0.0.1:8000/customers/${editingCustomer.customer_id}` : "http://127.0.0.1:8000/customers";
+      const url = editingCustomer ? `${import.meta.env.VITE_API_URL}/customers/${editingCustomer.customer_id}` : `${import.meta.env.VITE_API_URL}/customers`;
       const method = editingCustomer ? "PUT" : 'POST';
 
       await fetch(url, {method, headers: {"Content-Type":"application/json", Authorization: `Bearer ${token}`},

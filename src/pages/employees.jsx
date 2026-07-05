@@ -12,7 +12,8 @@ const Employees = () => {
 
   const fetchEmployees = async () => {
     setLoading(true);
-    await fetch("http://127.0.0.1:8000/employees", {headers: {Authorization: `Bearer ${token}`}})
+    console.log(import.meta.env.VITE_API_URL)
+    await fetch(`${import.meta.env.VITE_API_URL}/employees`, {headers: {Authorization: `Bearer ${token}`}})
     .then(res => {
       if(!res.ok){
         throw new Error("Failed to fetch data");
@@ -34,7 +35,7 @@ const Employees = () => {
       return;
     }
     try{
-      const res = await fetch(`http://127.0.0.1:8000/employees/${id}`, {method: "DELETE", headers: {Authorization: `Bearer ${token}`}});
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/employees/${id}`, {method: "DELETE", headers: {Authorization: `Bearer ${token}`}});
       if(!res.ok){
         throw new Error(`Delete failed: ${res.status}`);
       }
@@ -46,7 +47,7 @@ const Employees = () => {
   }
 
   async function changeEmployees(){
-    const endpoint = editingEmployee ? `http://127.0.0.1:8000/employees/${editingEmployee.emp_id}` : "http://127.0.0.1:8000/employees";
+    const endpoint = editingEmployee ? `${import.meta.env.VITE_API_URL}/employees/${editingEmployee.emp_id}` : `${import.meta.env.VITE_API_URL}/employees`;
     const method = editingEmployee ? "PUT" : "POST";
     await fetch(endpoint, {method, headers: {"Content-Type" : "application/json", Authorization : `Bearer ${token}`},
       body: JSON.stringify(form)}

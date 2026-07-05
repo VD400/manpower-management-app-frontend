@@ -12,7 +12,7 @@ const Contracts = () => {
 
   const fetchContracts = async () => {
     setLoading(true);
-    await fetch("http://127.0.0.1:8000/contracts", {headers: {Authorization: `Bearer ${token}`}})
+    await fetch(`${import.meta.env.VITE_API_URL}/contracts`, {headers: {Authorization: `Bearer ${token}`}})
     .then(res => {
       if(!res.ok){
         throw new Error("Failed to fetch contracts");
@@ -34,7 +34,7 @@ const Contracts = () => {
   },[]);
 
   const changeContracts = async () => {
-    const url = editingContracts ? `http://127.0.0.1:8000/contracts/${editingContracts.contract_id}` : "http://127.0.0.1:8000/contracts";
+    const url = editingContracts ? `${import.meta.env.VITE_API_URL}/contracts/${editingContracts.contract_id}` : `${import.meta.env.VITE_API_URL}/contracts`;
     const method = editingContracts ? "PUT" : "POST";
     const payload = {emp_id: parseInt(form.emp_id, 10),
       customer_id: parseInt(form.customer_id,10),
@@ -60,7 +60,7 @@ const Contracts = () => {
     if(!window.confirm("Do you want to delete this contract?")){
       return;
     }
-    await fetch(`http://127.0.0.1:8000/contracts/${id}`, {method: "DELETE", headers: {Authorization: `Bearer ${token}`}});
+    await fetch(`${import.meta.env.VITE_API_URL}/contracts/${id}`, {method: "DELETE", headers: {Authorization: `Bearer ${token}`}});
     fetchContracts();
   }
 
