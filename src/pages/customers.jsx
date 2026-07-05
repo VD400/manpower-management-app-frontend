@@ -79,7 +79,7 @@ const Customers = () => {
             <input className="border border-gray-200 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:border-blue-400" type="text" value={form.address} onChange={e=>{setForm({...form, address: e.target.value})}}/>
           </div>
           </div>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700" onClick={handleSubmit}>{editingCustomer ? "Edit" : "Add"}</button>
+        <button type="button" className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700" onClick={handleSubmit}>{editingCustomer ? "Edit" : "Add"}</button>
         </form>}
         </div>
         <div className="border border-gray-200 rounded-xl overflow-hidden">
