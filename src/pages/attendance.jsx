@@ -55,7 +55,7 @@ const Attendance = () => {
     if(!window.confirm("Do you want to delete this contract?")){
       return;
     }
-    await fetch(`${import.meta.env.VITE_API_URL}/${id}`, {method: "DELETE", headers: {Authorization: `Bearer ${token}`}});
+    await fetch(`${import.meta.env.VITE_API_URL}/attendance/${id}`, {method: "DELETE", headers: {Authorization: `Bearer ${token}`}});
     await fetchAttendance();
   }
 
