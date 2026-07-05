@@ -106,7 +106,7 @@ const Incidents = () => {
             <tr>
               <th className="px-4 py-3 text-left">Index</th>
               <th className="px-4 py-3 text-left">Employee ID</th>
-              <th className="px-4 py-3 text-left">Customer In</th>
+              <th className="px-4 py-3 text-left">Customer ID</th>
               <th className="px-4 py-3 text-left">Description</th>
               <th className="px-4 py-3 text-left">Loss Amount</th>
               <th className="px-4 py-3 text-left">Incident Date</th>

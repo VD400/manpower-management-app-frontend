@@ -84,6 +84,7 @@ const Customers = () => {
             <thead className="bg-gray-50 text-gray-500 uppercase text-xs">
               <tr>
                 <th className="px-4 py-3 text-left">Index</th>
+                <th className="px-4 py-3 text-left">Customer ID</th>
                 <th className="px-4 py-3 text-left">Customer Name</th>
                 <th className="px-4 py-3 text-left">Address</th>
                 <th className="px-4 py-3 text-left">Actions</th>
@@ -93,6 +94,7 @@ const Customers = () => {
               {customers.map((c,index)=>(
                 <tr key={c.customer_id} className="hover:bg-gray-100">
                   <td className="px-4 py-3 font-gray-400">{index+1}</td>
+                  <td className="px-4 py-3 font-gray-400">{c.customer_id}</td>
                   <td className="px-4 py-3 font-medium">{c.customer_name}</td>
                   <td className="px-4 py-3 font-gray-400">{c.address}</td>
                   <td className="px-4 py-3">

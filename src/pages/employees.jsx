@@ -90,6 +90,7 @@ const Employees = () => {
           <thead className="bg-gray-80 text-gray-500 uppercase text-xs">
             <tr>
               <th className="px-4 py-3 text-left">Index</th>
+              <th className="px-4 py-3 text-left">Employee ID</th>
               <th className="px-4 py-3 text-left">Employee Name</th>
               <th className="px-4 py-3 text-left">Age</th>
               <th className="px-4 py-3 text-left">Mobile Number</th>
@@ -100,6 +101,7 @@ const Employees = () => {
             {employees.map((e,index)=>(
               <tr key={e.emp_id} className="hover:bg-gray-100">
                 <td className="px-4 py-3 font-gray-400">{index+1}</td>
+                <td className="px-4 py-3 font-gray-400">{e.emp_id}</td>
                 <td className="px-4 py-3 font-medium">{e.name}</td>
                 <td className="px-4 py-3 font-gray-400">{e.age}</td>
                 <td className="px-4 py-3 font-gray-400">{e.mobile_number}</td>
