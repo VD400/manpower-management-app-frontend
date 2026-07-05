@@ -106,7 +106,8 @@ const Shifts = () => {
           <thead className="bg-gray-50 text-gray-500 uppercase text-xs">
             <tr>
               <th className="px-4 py-3 text-left">Index</th>
-              <th className="px-4 py-3 text-left">Contract Number</th>
+              <th className="px-4 py-3 text-left">Shift ID</th>
+              <th className="px-4 py-3 text-left">Contract ID</th>
               <th className="px-4 py-3 text-left">Shift Date</th>
               <th className="px-4 py-3 text-left">Start Time</th>
               <th className="px-4 py-3 text-left">End Time</th>
@@ -119,6 +120,7 @@ const Shifts = () => {
             {shifts.map((e,idx) => (
               <tr key={e.shift_id} className="hover:bg-gray-100">
                 <td className="px-4 py-3 font-gray-400">{idx+1}</td>
+                <td className="px-4 py-3 font-gray-400">{e.shift_id}</td>
                 <td className="px-4 py-3 font-gray-400">{e.contract_id}</td>
                 <td className="px-4 py-3 font-gray-400">{e.shift_date}</td>
                 <td className="px-4 py-3 font-gray-400">{e.start_time}</td>

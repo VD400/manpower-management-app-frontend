@@ -114,6 +114,7 @@ const Contracts = () => {
           <thead className="bg-gray-50 text-gray-500 uppercase text-xs">
             <tr>
               <th className="px-4 py-3 text-left">Index</th>
+              <th className="px-4 py-3 text-left">Contract ID</th>
               <th className="px-4 py-3 text-left">Employee ID</th>
               <th className="px-4 py-3 text-left">Customer ID</th>
               <th className="px-4 py-3 text-left">Contract Type</th>
@@ -127,6 +128,7 @@ const Contracts = () => {
             {contracts.map((c, idx)=>(
               <tr key={c.contract_id} className="hover:bg-gray-100">
                 <td className="px-4 py-3 font-gray-400">{idx+1}</td>
+                <td className="px-4 py-3 font-gray-400">{c.contract_id}</td>
                 <td className="px-4 py-3 font-gray-400">{c.emp_id}</td>  
                 <td className="px-4 py-3 font-gray-400">{c.customer_id}</td>
                 <td className="px-4 py-3 font-gray-400">{c.contract_type}</td>
