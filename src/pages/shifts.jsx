@@ -55,6 +55,7 @@ const Shifts = () => {
     console.error(err);
     setError("Could not save shift");
   }
+  }
 
   const handleDelete = async (idx) => {
     if(!window.confirm("Are you sure you want to delete this shift?")){
