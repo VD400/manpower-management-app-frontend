@@ -79,7 +79,7 @@ const Attendance = () => {
           </div>
           <div>
           <label className="text-xs text-gray-500 block mb-1">Check In</label>
-          <input className="border border-gray-200 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:border-blue-400" type="time" value={form.check_in} onChange={(e) => setForm({...form, check_in: e.target.value})}/>
+          <input className="border border-gray-200 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:border-blue-400" type="datetime-local" value={form.check_in} onChange={(e) => setForm({...form, check_in: e.target.value})}/>
           </div>
           <div>
           <label className="text-xs text-gray-500 block mb-1">Status</label>
