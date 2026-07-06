@@ -1,16 +1,144 @@
-# React + Vite
+# Manpower Management System — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React-based frontend for a Manpower Management System that allows users to manage employees, customers, contracts, shifts, attendance, and workplace incidents through a clean and responsive interface.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Live Demo
 
-## React Compiler
+Frontend:
+https://manpower-management-app-frontend.vercel.app/
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Backend API:
+https://manpower-management-app-backend.onrender.com
 
-## Expanding the ESLint configuration
+Backend Repository:
+https://github.com/VD400/manpower-management-app-backend
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Features
+
+- JWT Authentication
+- Login & Registration
+- Protected Routes
+- Employee Management
+- Customer Management
+- Contract Management
+- Shift Management
+- Attendance Tracking
+- Incident Tracking
+- Responsive UI
+- CRUD Operations
+- API Integration
+
+---
+
+## Tech Stack
+
+- React
+- Vite
+- JavaScript
+- Tailwind CSS
+- React Router
+- Fetch API
+
+---
+
+## Screenshots
+
+### Login
+
+![Login](screenshots/manpower-app-login-page.png)
+
+---
+
+### Employees
+
+![Employees](screenshots/manpower-app-employee-page.png)
+
+---
+
+### Customers
+
+![Customers](screenshots/manpower-app-customers-page.png)
+
+---
+
+### Contracts
+
+![Contracts](screenshots/manpower-app-contracts-page.png)
+
+---
+
+### Shifts
+
+![Shifts](screenshots/manpower-app-shifts-page.png)
+
+---
+
+### Attendance
+
+![Attendance](screenshots/manpower-app-attendance-page.png)
+
+---
+
+### Incidents
+
+![Incidents](screenshots/manpower-app-incidents-page.png)
+
+---
+
+## Project Structure
+
+```
+src/
+│
+├── components/
+├── pages/
+├── assets/
+├── App.jsx
+├── App.css
+├── index.css
+└── main.jsx
+```
+
+---
+
+## Running Locally
+
+```bash
+git clone https://github.com/VD400/manpower-management-app-frontend
+
+npm install
+
+npm run dev
+```
+
+---
+
+## Environment Variables
+
+```
+VITE_API_URL=
+```
+
+---
+
+## Future Improvements
+
+- Dashboard Charts
+- Search & Filters
+- Pagination
+- Responsive Mobile Layout
+- Better Error Handling
+- Toast Notifications
+
+---
+
+## Author
+
+Vishesh Dubey
+
+GitHub:
+https://github.com/VD400
