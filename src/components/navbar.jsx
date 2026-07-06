@@ -13,7 +13,6 @@ const Navbar = ({ toggleSidebar }) => {
         <button className="menu-toggle-btn" onClick={toggleSidebar}>
           ☰
         </button>
-        Hello
       </div> 
       <div className="navbar-right">
         <div className="auth-profile-wrapper">
