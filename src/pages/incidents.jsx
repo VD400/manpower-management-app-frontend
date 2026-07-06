@@ -87,7 +87,7 @@ const Incidents = () => {
           </div>
           <div>
           <label className="text-xs text-gray-500 block mb-1">Loss Amount</label>
-          <input className="border border-gray-200 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:border-blue-400" type="number" value={form.loss_amount} onChange={(e) => setForm({...form, loss_amount:e.target.value})}/>
+          <input className="border border-gray-200 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:border-blue-400" type="number" step="0.01" value={form.loss_amount} onChange={(e) => setForm({...form, loss_amount:e.target.value})}/>
           </div>
           <div>
           <label className="text-xs text-gray-500 block mb-1">Incident Date</label>
