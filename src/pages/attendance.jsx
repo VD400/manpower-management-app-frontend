@@ -108,10 +108,10 @@ const Attendance = () => {
           <tbody className="divide-y divide-gray-100">
             {attendance.map((e,idx)=>(
               <tr className="hover:bg-gray-50" key={e.attendance_id}>
-                <td className="px-4 py-3 text-gray-400">{idx+1}</td>
-                <td className="px-4 py-3 text-gray-400">{e.shift_id}</td>
-                <td className="px-4 py-3 text-gray-400">{e.check_in}</td>
-                <td className="px-4 py-3 text-gray-400">{e.status}</td>
+                <td className="px-4 py-3 font-gray-400">{idx+1}</td>
+                <td className="px-4 py-3 font-gray-400">{e.shift_id}</td>
+                <td className="px-4 py-3 font-gray-400">{e.check_in}</td>
+                <td className="px-4 py-3 font-gray-400">{e.status}</td>
                 <td className="px-4 py-3">
                   <button className="text-red-500 border border-red-200 px-3 py-1 rounded hover:bg-red-50 text-xs" onClick={() => handleDelete(e.attendance_id)}>Delete</button>
                   <button onClick={() =>{
