@@ -96,11 +96,11 @@ const Shifts = () => {
           </div>
           <div>
           <label className="text-xs text-gray-500 block mb-1">Shift Hours</label>
-          <input className="border border-gray-200 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:border-blue-400" type="number" value={form.shift_hours} onChange={e => setForm({...form, shift_hours: e.target.value})}></input>
+          <input className="border border-gray-200 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:border-blue-400" type="number" step="any" value={form.shift_hours} onChange={e => setForm({...form, shift_hours: e.target.value})}></input>
           </div>
           <div>
           <label className="text-xs text-gray-500 block mb-1">Shift Pay</label>
-          <input className="border border-gray-200 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:border-blue-400" type="number" value={form.shift_pay} onChange={e => setForm({...form, shift_pay: e.target.value})}></input>
+          <input className="border border-gray-200 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:border-blue-400" type="number" step="any" value={form.shift_pay} onChange={e => setForm({...form, shift_pay: e.target.value})}></input>
           </div>
           </div>
           <button type="button" className="bg-blue-600 text-sm px-4 py-2 rounded-lg text-white mt-1 hover:bg-blue-700" onClick={changeShifts}>{editingShift ? "Edit" : "Add"}</button>
