@@ -103,7 +103,7 @@ const Shifts = () => {
           <input className="border border-gray-200 rounded-lg px-3 py-2 w-full text-sm focus:outline-none focus:border-blue-400" type="number" value={form.shift_pay} onChange={e => setForm({...form, shift_pay: e.target.value})}></input>
           </div>
           </div>
-          <button type="button" className="bg-blue-600 text-sm px-4 py-2 rounded-lg text-white mt-1 hover:bg-blue-600" onClick={changeShifts}>{editingShift ? "Edit" : "Add"}</button>
+          <button type="button" className="bg-blue-600 text-sm px-4 py-2 rounded-lg text-white mt-1 hover:bg-blue-700" onClick={changeShifts}>{editingShift ? "Edit" : "Add"}</button>
         </form>}
       </div>
       <div className="border border-gray-200 rounded-xl overflow-hidden">
