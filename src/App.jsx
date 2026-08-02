@@ -10,6 +10,7 @@ import Navbar from './components/navbar';
 import Login from './pages/login'
 import './App.css';
 import Attendance from './pages/attendance';
+import AiAssistant from './pages/aiAssistant';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -38,6 +39,7 @@ function App() {
             <Route path="/shifts" element={<Shifts/>}/>
             <Route path="/attendance" element={<Attendance/>}/>
             <Route path="/incidents" element={<Incidents/>}/>
+            <Route path="/aiAssistant" element={<AiAssistant/>}/>
           </Routes>
         </main>
       </div>

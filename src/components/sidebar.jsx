@@ -8,6 +8,7 @@ import {
   LuClock,  // Shifts
   LuClipboardCheck, // Attendance
   LuTriangleAlert,  // Incidents
+  LuTrainFront,
 } from "react-icons/lu";
 
 const Sidebar = ({isOpen}) => {
@@ -40,6 +41,10 @@ const Sidebar = ({isOpen}) => {
         <NavLink to="/incidents" className={({isActive}) => isActive ? "menu-item active" : "menu-item"}>
         <span className="icon"><LuTriangleAlert/></span>
           Incidents
+        </NavLink>
+        <NavLink to="/aiAssistant" className={({isActive}) => isActive ? "menu-item active" : "menu-item"}>
+        <span className="icon"><LuTrainFront/></span>
+          AI Assistant
         </NavLink>
       </nav>
       <div className="sidebar-footer">

@@ -8,11 +8,11 @@ function Login(){
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e, demoEmail, demoPassword) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('username', email);
-    formData.append('password', password);
+    formData.append('username', demoEmail || email);
+    formData.append('password', demoPassword || password);
     try{
       const response = await fetch(`${import.meta.env.VITE_API_URL}/token`, {
         method: 'POST', body: formData
@@ -78,6 +78,9 @@ function Login(){
               type="submit"
               className="w-full bg-blue-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
               Sign in
+            </button>
+            <button type="button" onClick={(e) => handleLogin(e,'demoUser@gmail.com', '1234')} className="w-full bg-blue-600 text-white py-2 rounded-lg my-2 text-sm font-medium hover:bg-blue-700 transition-colors">
+              Login Using Demo Account
             </button>
           </form>
         </div>
