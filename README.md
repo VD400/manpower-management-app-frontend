@@ -31,6 +31,7 @@ https://github.com/VD400/manpower-management-app-backend
 - Responsive UI
 - CRUD Operations
 - API Integration
+- AI Assistant using Langgraph
 
 ---
 
@@ -42,6 +43,7 @@ https://github.com/VD400/manpower-management-app-backend
 - Tailwind CSS
 - React Router
 - Fetch API
+- react-textarea-autosize, react-icons — UI components
 
 ---
 
@@ -86,6 +88,12 @@ https://github.com/VD400/manpower-management-app-backend
 ### Incidents
 
 ![Incidents](screenshots/manpower-app-incidents-page.png)
+
+---
+
+### AI Assistant
+
+![aiAssistant](screenshots/manpower-app-ai-assistant-page.png)
 
 ---
 
